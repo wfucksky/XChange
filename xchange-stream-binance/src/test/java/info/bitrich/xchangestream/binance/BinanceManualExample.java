@@ -5,6 +5,7 @@ import info.bitrich.xchangestream.core.StreamingExchange;
 import info.bitrich.xchangestream.core.StreamingExchangeFactory;
 import io.reactivex.disposables.Disposable;
 import org.knowm.xchange.ExchangeSpecification;
+import org.knowm.xchange.binance.dto.marketdata.KlineInterval;
 import org.knowm.xchange.currency.CurrencyPair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +49,16 @@ public class BinanceManualExample {
                   LOG.info("Ticker: {}", ticker);
                 },
                 throwable -> LOG.error("ERROR in getting ticker: ", throwable));
+
+    // Disposable klines =
+    //     exchange
+    //         .getStreamingMarketDataService()
+    //         .getKline(CurrencyPair.ETH_BTC, KlineInterval.m1)
+    //         .subscribe(
+    //             ticker -> {
+    //               LOG.info("Ticker: {}", ticker);
+    //             },
+    //             throwable -> LOG.error("ERROR in getting ticker: ", throwable));
 
     Disposable trades =
         exchange
