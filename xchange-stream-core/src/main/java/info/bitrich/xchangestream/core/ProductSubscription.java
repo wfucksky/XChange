@@ -18,12 +18,14 @@ public class ProductSubscription {
   private final List<CurrencyPair> ticker;
   private final List<CurrencyPair> userTrades;
   private final List<CurrencyPair> orders;
+  private final List<CurrencyPair> klines;
   private final List<Currency> balances;
 
   private ProductSubscription(ProductSubscriptionBuilder builder) {
     this.orderBook = asList(builder.orderBook);
     this.trades = asList(builder.trades);
     this.ticker = asList(builder.ticker);
+    this.klines = asList(builder.klines);
     this.orders = asList(builder.orders);
     this.userTrades = asList(builder.userTrades);
     this.balances = asList(builder.balances);
@@ -47,6 +49,10 @@ public class ProductSubscription {
     return ticker;
   }
 
+  public List<CurrencyPair> getKline() {
+    return klines;
+  }
+
   public List<CurrencyPair> getOrders() {
     return orders;
   }
@@ -64,11 +70,11 @@ public class ProductSubscription {
   }
 
   public boolean hasAuthenticated() {
-    return !orders.isEmpty() || !userTrades.isEmpty() || !balances.isEmpty();
+    return !orders.isEmpty() || !userTrades.isEmpty() || !balances.isEmpty()|| !klines.isEmpty();
   }
 
   public boolean hasUnauthenticated() {
-    return !ticker.isEmpty() || !trades.isEmpty() || !orderBook.isEmpty();
+    return !ticker.isEmpty() || !trades.isEmpty() || !orderBook.isEmpty()|| !klines.isEmpty();
   }
 
   public static ProductSubscriptionBuilder create() {
@@ -79,6 +85,7 @@ public class ProductSubscription {
     private final Set<CurrencyPair> orderBook;
     private final Set<CurrencyPair> trades;
     private final Set<CurrencyPair> ticker;
+    private final Set<CurrencyPair> klines;
     private final Set<CurrencyPair> userTrades;
     private final Set<CurrencyPair> orders;
     private final Set<Currency> balances;
@@ -87,6 +94,7 @@ public class ProductSubscription {
       orderBook = new HashSet<>();
       trades = new HashSet<>();
       ticker = new HashSet<>();
+      klines = new HashSet<>();
       orders = new HashSet<>();
       userTrades = new HashSet<>();
       balances = new HashSet<>();
@@ -104,6 +112,11 @@ public class ProductSubscription {
 
     public ProductSubscriptionBuilder addTicker(CurrencyPair pair) {
       ticker.add(pair);
+      return this;
+    }
+
+    public ProductSubscriptionBuilder addKline(CurrencyPair pair) {
+      klines.add(pair);
       return this;
     }
 
@@ -126,6 +139,7 @@ public class ProductSubscription {
       orderBook.add(pair);
       trades.add(pair);
       ticker.add(pair);
+      klines.add(pair);
       orders.add(pair);
       userTrades.add(pair);
       balances.add(pair.base);
